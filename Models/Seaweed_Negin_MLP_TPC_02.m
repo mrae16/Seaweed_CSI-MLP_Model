@@ -19,6 +19,7 @@ Data_all = Data(:,:);
     % Fucus Vesicolusus with HC+W = f1
     % Fucus Vesicolusus with HC+W+ETOH = f2
 
+%% Key Model Paramater Variables and Switches
 Seaweed_Solvent_Combo = 'f2';         %   a1, a2, f1, f2, a12, f12, or all.
 
 % hidden layer size (h)
@@ -422,6 +423,7 @@ disp(['Mean Absolute Error: ', num2str(mean(abs(errNARX)))])
 % softmax - Soft max transfer function1.
 % tansig - Symmetric sigmoid transfer function1.
 % tribas - Triangular basis transfer function1.
+
 
 
 
