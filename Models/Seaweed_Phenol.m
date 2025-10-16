@@ -1,25 +1,10 @@
 
 %% ANOVA Testing for total phenol
-% Assuming your data is in a table T
-% with columns 'method', 'subgroup', 'concentration', and 'optical_depth'
+
 clear
 clc 
 
-% T = readtable("Seaweed_ALL.xlsx", 'Sheet', 'Matlab_Phenol')
-% head(T)
-% 
-% % Convert categorical variables to categorical data type
-% T.method = categorical(T.method);
-% T.subgroups = categorical(T.subgroups);
-% 
-% % Fit the model
-% lm = fitlm(T, 'concentration ~ method + subgroups + method:subgroups');
-% 
-% % Perform ANOVA and display table
-% anova(lm, 'summary')
-
-
-% Define your data
+% Defining data
 Data = 'Minerals';
 % define dimension of HSD test#
 D = [1];
@@ -112,5 +97,6 @@ end
 %     ["Group A","Group B","Lower Limit","A-B","Upper Limit","P-value"]);
 % tbl.("Group A")=gnames(tbl.("Group A"));
 % tbl.("Group B")=gnames(tbl.("Group B"))
+
 
 
