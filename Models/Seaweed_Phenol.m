@@ -19,63 +19,14 @@ switch Data
         T = readtable("Seaweed_Minerals_Matlab.xlsx", 'Sheet', 'Matlab_Minerals');
         % Perform two-way ANOVA and label variables
         [~,~,stats] = anovan(T.Concentration, {T.Method, T.Material, T.Solvent, T.Element}, 'Model', 'interaction', 'varnames', {'Method', 'Material', 'Solvent', 'Element'});
-    case 'Ahmad MC'
-        T = readtable("Seaweed_Ahmed_MatlabCopy.xlsx", 'Sheet', 'Sheet3');
-        % Perform one-way ANOVA
-        [~,~,stats] = anovan(T.FinalMC, {T.Method, T.Temp, T.AirflowRate}, 'Model', 'interaction', 'varnames', {'Method', '[Temp','AirflowRate]'});        
-        % Display the results
-        disp('ANOVA Table:');
-        % disp(tbl);        
-        % % If you want to perform multiple comparisons 
-        [results,~,~,gnames] = multcompare(stats, 'Dimension', D, 'CType', '');
-         tbl = array2table(results,"VariableNames", ...
-            ["Group A","Group B","Lower Limit","A-B","Upper Limit","P-value"]);
-        tbl.("Group A")=gnames(tbl.("Group A"));
-        tbl.("Group B")=gnames(tbl.("Group B"))
-        significantResults = tbl(0 < tbl{:, 6} < 0.05, :);
-    case 'Ahmad TPC' 
-        T = readtable("Seaweed_Ahmed_MatlabCopy.xlsx", Sheet="Sheet3");
-        T=T(1:33,:);
-        % Perform one-way ANOVA
-        [p, tbl, stats] = anova1(T.UVabs, T.Temp);
-        % Display the results
-        disp('ANOVA Table:');
-        disp(tbl);
-        [results,~,~,gnames] = multcompare(stats, 'Dimension', [1], 'CType', '');
 
-        tbl = array2table(results,"VariableNames", ...
-            ["Group A","Group B","Lower Limit","A-B","Upper Limit","P-value"]);
-        tbl.("Group A")=gnames(tbl.("Group A"));
-        tbl.("Group B")=gnames(tbl.("Group B"))
-
+        % Display the results
+        significant_pairs = pairs(p_values < 0.05, :);
+        significant_p_values = p_values(p_values < 0.05);
         
-        % If you want to perform multiple comparisons
-        multcompare(stats);
-    case 'Ahmad TPC (tTest)'
-        % Perform pairwise t-tests  
-        T = readtable("Seaweed_Ahmed_MatlabCopy.xlsx", Sheet="Sheet4");
-        [pairs, p_values] = deal([]);
-        UVabs = zeros(12,3);
-        UVabs(:,:) = [T.UVabs1, T.UVabs2, T.UVabs3];
-        SType =  repmat(1:11, 3, 1);    
-        SType = SType(:);
-
-for i = 1:11
-    for j = i+1:11
-        [~, p] = ttest2(UVabs(SType == i), UVabs(SType == j));
-        pairs = [pairs; i, j];
-        p_values = [p_values; p];
-    end
-end
-
-% Display the results
-significant_pairs = pairs(p_values < 0.05, :);
-significant_p_values = p_values(p_values < 0.05);
-
-% Display the significant results
-disp('Significant Pairwise Comparisons (p < 0.05):');
-disp(table(significant_pairs(:,1), significant_pairs(:,2), significant_p_values, 'VariableNames', {'SType1', 'SType2', 'pValue'}));
-
+        % Display the significant results
+        disp('Significant Pairwise Comparisons (p < 0.05):');
+        disp(table(significant_pairs(:,1), significant_pairs(:,2), significant_p_values, 'VariableNames', {'SType1', 'SType2', 'pValue'}));
 end
 
 
